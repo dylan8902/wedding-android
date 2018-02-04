@@ -1,6 +1,8 @@
 package es.anjon.dyl.wedding;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -13,9 +15,9 @@ import es.anjon.dyl.wedding.fragments.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final boolean TABLE_PLAN_ENABLED = true;
-    private static final boolean QUIZ_ENABLED = true;
-    private static final boolean PHOTOS_ENABLED = true;
+    private static final String TABLE_PLAN_KEY = "table_plan";
+    private static final String QUIZ_KEY = "quiz";
+    private static final String PHOTOS_KEY = "photos";
     private static final int TABLE_PLAN_ID = 201;
     private static final int QUIZ_ID = 203;
     private static final int PHOTOS_ID = 204;
@@ -38,17 +40,24 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Menu menu = navigation.getMenu();
 
-        if (TABLE_PLAN_ENABLED) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        //TODO move to notification handler
+        prefs.edit().putBoolean(TABLE_PLAN_KEY, true).apply();
+        prefs.edit().putBoolean(QUIZ_KEY, true).apply();
+        prefs.edit().putBoolean(PHOTOS_KEY, true).apply();
+
+        if (prefs.getBoolean(TABLE_PLAN_KEY, false)) {
             menu.add(Menu.NONE, TABLE_PLAN_ID, Menu.NONE, getString(R.string.title_table_plan))
                     .setIcon(R.drawable.ic_home_black_24dp);
         }
 
-        if (QUIZ_ENABLED) {
+        if (prefs.getBoolean(QUIZ_KEY, false)) {
             menu.add(Menu.NONE, QUIZ_ID, Menu.NONE, getString(R.string.title_quiz))
                     .setIcon(R.drawable.ic_home_black_24dp);
         }
 
-        if (PHOTOS_ENABLED) {
+        if (prefs.getBoolean(PHOTOS_KEY, false)) {
             menu.add(Menu.NONE, PHOTOS_ID, Menu.NONE, getString(R.string.title_photos))
                     .setIcon(R.drawable.ic_home_black_24dp);
         }
