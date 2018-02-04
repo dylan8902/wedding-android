@@ -1,6 +1,7 @@
 package es.anjon.dyl.wedding;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -8,19 +9,31 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import es.anjon.dyl.wedding.fragments.HomeFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final String TAG = "MainActivity";
     private static final String TABLE_PLAN_KEY = "table_plan";
     private static final String QUIZ_KEY = "quiz";
     private static final String PHOTOS_KEY = "photos";
     private static final int TABLE_PLAN_ID = 201;
     private static final int QUIZ_ID = 203;
     private static final int PHOTOS_ID = 204;
+    private static final LatLng ST_MARYS = new LatLng(51.4707221,-3.1772467);
+    private static final LatLng ST_DAVIDS = new LatLng(51.46055,-3.1692467);
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
                 frag = HomeFragment.newInstance(getString(R.string.title_home));
                 break;
             case R.id.navigation_map:
-                frag = HomeFragment.newInstance(getString(R.string.title_map));
+                frag = SupportMapFragment.newInstance();
+                ((SupportMapFragment) frag).getMapAsync(this);
                 break;
         }
 
@@ -82,6 +96,26 @@ public class MainActivity extends AppCompatActivity {
             ft.replace(R.id.container, frag, frag.getTag());
             ft.commit();
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        try {
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style));
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
+
+        googleMap.addMarker(new MarkerOptions().position(ST_MARYS)
+                .title("St Mary's Church"));
+        googleMap.addMarker(new MarkerOptions().position(ST_DAVIDS)
+                .title("The Principal St David's Hotel"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ST_MARYS, 14));
     }
 
 }
