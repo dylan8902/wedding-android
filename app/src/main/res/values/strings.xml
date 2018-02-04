@@ -2,5 +2,7 @@
     <string name="app_name">Dylan &amp; Alice</string>
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_table_plan">Table Plan</string>
+    <string name="title_quiz">Quiz</string>
+    <string name="title_photos">Photos</string>
 </resources>

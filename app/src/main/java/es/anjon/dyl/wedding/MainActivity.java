@@ -6,11 +6,19 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import es.anjon.dyl.wedding.fragments.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final boolean TABLE_PLAN_ENABLED = true;
+    private static final boolean QUIZ_ENABLED = true;
+    private static final boolean PHOTOS_ENABLED = true;
+    private static final int TABLE_PLAN_ID = 201;
+    private static final int QUIZ_ID = 203;
+    private static final int PHOTOS_ID = 204;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -28,6 +36,23 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        Menu menu = navigation.getMenu();
+
+        if (TABLE_PLAN_ENABLED) {
+            menu.add(Menu.NONE, TABLE_PLAN_ID, Menu.NONE, getString(R.string.title_table_plan))
+                    .setIcon(R.drawable.ic_home_black_24dp);
+        }
+
+        if (QUIZ_ENABLED) {
+            menu.add(Menu.NONE, QUIZ_ID, Menu.NONE, getString(R.string.title_quiz))
+                    .setIcon(R.drawable.ic_home_black_24dp);
+        }
+
+        if (PHOTOS_ENABLED) {
+            menu.add(Menu.NONE, PHOTOS_ID, Menu.NONE, getString(R.string.title_photos))
+                    .setIcon(R.drawable.ic_home_black_24dp);
+        }
+
         selectFragment(navigation.getMenu().getItem(0));
     }
 
@@ -40,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.navigation_map:
                 frag = HomeFragment.newInstance(getString(R.string.title_map));
-                break;
-            case R.id.navigation_notifications:
-                frag = HomeFragment.newInstance(getString(R.string.title_notifications));
                 break;
         }
 
