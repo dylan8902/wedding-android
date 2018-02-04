@@ -9,3 +9,7 @@
 .externalNativeBuild
 
 app/google-services.json
+
+*.apk
+
+app/release/output.json
