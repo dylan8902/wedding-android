@@ -5,4 +5,7 @@
     <string name="title_table_plan">Table Plan</string>
     <string name="title_quiz">Quiz</string>
     <string name="title_photos">Photos</string>
+    <string name="photos_share">We would love it if you could share your photos of the day in our shared album</string>
+    <string name="photos_button">Share Your Photos</string>
+    <string name="photos_url">https://photos.app.goo.gl/5aBQV3EJXHKcVvNc2</string>
 </resources>

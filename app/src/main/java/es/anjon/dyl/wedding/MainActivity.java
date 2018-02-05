@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import es.anjon.dyl.wedding.fragments.HomeFragment;
+import es.anjon.dyl.wedding.fragments.PhotosFragment;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.navigation_map:
                 frag = SupportMapFragment.newInstance();
                 ((SupportMapFragment) frag).getMapAsync(this);
+                break;
+            case PHOTOS_ID:
+                frag = PhotosFragment.newInstance();
                 break;
         }
 
