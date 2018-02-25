@@ -9,10 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 import es.anjon.dyl.wedding.R;
+import es.anjon.dyl.wedding.quiz.Result;
 import es.anjon.dyl.wedding.services.Quiz;
 
 public class QuizFragment extends Fragment {
@@ -26,6 +30,7 @@ public class QuizFragment extends Fragment {
     private LinearLayout mSetupView;
     private LinearLayout mQuizView;
     private LinearLayout mResultView;
+    private Spinner mSpinner;
     private Quiz mQuiz;
 
     public static Fragment newInstance() {
@@ -49,6 +54,7 @@ public class QuizFragment extends Fragment {
         mSubmit = view.findViewById(R.id.button_quiz_submit);
         mQuizView = view.findViewById(R.id.quiz);
         mResultView = view.findViewById(R.id.results);
+        mSpinner = view.findViewById(R.id.table);
 
         // TODO has the quiz already been done?
         mQuiz = new Quiz();
@@ -108,9 +114,10 @@ public class QuizFragment extends Fragment {
     }
 
     private void finishQuiz() {
-        mScoreView.setText(mQuiz.getScore());
+        mScoreView.setText(String.format(Locale.UK, "Score: %d", mQuiz.getScore()));
         mQuizView.setVisibility(View.GONE);
         mResultView.setVisibility(View.VISIBLE);
+        new Result(mQuiz.getScore(), mSpinner.getSelectedItem().toString()).save();
     }
 
     private void toast(String text) {

@@ -53,8 +53,8 @@ public class Quiz {
         }
     }
 
-    public String getScore() {
-        return String.format("Score: %d", score);
+    public int getScore() {
+        return score;
     }
 
     public boolean hasQuestion() {
