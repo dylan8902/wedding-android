@@ -92,6 +92,9 @@ public class HomeFragment extends Fragment {
             Log.e(TAG, "When is the big day?");
         }
         long difference = weddingDate.getTime() - System.currentTimeMillis();
+        if (difference < 0) {
+            mTextView.setVisibility(View.GONE);
+        }
 
         String secondPlural = "";
         int seconds = (int) (difference / 1000) % 60 ;
