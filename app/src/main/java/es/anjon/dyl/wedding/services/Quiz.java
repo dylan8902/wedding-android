@@ -36,6 +36,9 @@ public class Quiz {
     }
 
     public Question getQuestion() {
+        if (questionCounter >= questions.size()) {
+            return null;
+        }
         return questions.get(questionCounter);
     }
 
