@@ -8,4 +8,9 @@
     <string name="photos_share">We would love it if you could share your photos of the day in our shared album</string>
     <string name="photos_button">Share Your Photos</string>
     <string name="photos_url">https://photos.app.goo.gl/5aBQV3EJXHKcVvNc2</string>
+    <string name="quiz_name">Guess Who: Alice, Dylan or Both?</string>
+    <string name="quiz_submit">Submit</string>
+    <string name="quiz_alice">Alice</string>
+    <string name="quiz_dylan">Dylan</string>
+    <string name="quiz_both">Both</string>
 </resources>

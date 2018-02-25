@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_photos"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="es.anjon.dyl.wedding.fragments.QuizFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textColor="@android:color/black"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="@string/quiz_name" />
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textColor="@android:color/black"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="@string/quiz_name" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+        <RadioButton android:id="@+id/alice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:text="@string/quiz_alice" />
+        <RadioButton android:id="@+id/dylan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:text="@string/quiz_dylan" />
+        <RadioButton android:id="@+id/both"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:text="@string/quiz_both" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/button_quiz_submit"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="@string/quiz_submit"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+</LinearLayout>
