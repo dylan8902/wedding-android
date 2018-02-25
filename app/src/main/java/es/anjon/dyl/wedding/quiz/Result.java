@@ -10,7 +10,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Result {
 
-    private static final String RESULTS_KEY = "results";
+    private static final String TABLES_KEY = "tables";
     private int score;
     private String table;
 
@@ -34,7 +34,7 @@ public class Result {
     @Exclude
     public void save() {
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference mResultRef = mDatabase.getReference(RESULTS_KEY).push();
+        DatabaseReference mResultRef = mDatabase.getReference(TABLES_KEY).child(getTable()).push();
         mResultRef.setValue(this);
         Log.i("Result", "Result has been saved as " + mResultRef.getKey());
     }
