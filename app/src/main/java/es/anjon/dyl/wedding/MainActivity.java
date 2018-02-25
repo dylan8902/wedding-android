@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import es.anjon.dyl.wedding.fragments.HomeFragment;
 import es.anjon.dyl.wedding.fragments.PhotosFragment;
 import es.anjon.dyl.wedding.fragments.QuizFragment;
+import es.anjon.dyl.wedding.fragments.TablePlanFragment;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -107,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.navigation_map:
                 frag = SupportMapFragment.newInstance();
                 ((SupportMapFragment) frag).getMapAsync(this);
+                break;
+            case TABLE_PLAN_ID:
+                frag = TablePlanFragment.newInstance();
                 break;
             case QUIZ_ID:
                 frag = QuizFragment.newInstance();
