@@ -41,11 +41,13 @@ public class QuizFragment extends Fragment {
         // TODO has the quiz already been done?
         mQuiz = new Quiz();
 
-        Button submitButton = view.findViewById(R.id.button_quiz_submit);
+        final Button submitButton = view.findViewById(R.id.button_quiz_submit);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "Submit button!");
+                submitButton.setText(getText(R.string.quiz_submit));
+                mAnswer.setVisibility(View.VISIBLE);
                 submit();
             };
         });

@@ -9,8 +9,23 @@
     <string name="photos_button">Share Your Photos</string>
     <string name="photos_url">https://photos.app.goo.gl/5aBQV3EJXHKcVvNc2</string>
     <string name="quiz_name">Guess Who: Alice, Dylan or Both?</string>
-    <string name="quiz_submit">Submit</string>
+    <string name="quiz_welcome">How well do you know us? Compete against the other tables in our quiz</string>
+    <string name="quiz_start">Start</string>
+    <string name="quiz_submit">Go</string>
     <string name="quiz_alice">Alice</string>
     <string name="quiz_dylan">Dylan</string>
     <string name="quiz_both">Both</string>
+    <string name="quiz_table_choice">What table are you sat at?</string>
+    <string-array name="tables">
+        <item>Cardiff</item>
+        <item>Marrakesh</item>
+        <item>Mumbai</item>
+        <item>Jakarta</item>
+        <item>New York</item>
+        <item>Paris</item>
+        <item>Prague</item>
+        <item>Barcelona</item>
+        <item>Florence</item>
+        <item>Budapest</item>
+    </string-array>
 </resources>
