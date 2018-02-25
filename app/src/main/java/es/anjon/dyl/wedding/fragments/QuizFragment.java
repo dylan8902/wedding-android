@@ -3,7 +3,6 @@ package es.anjon.dyl.wedding.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +10,22 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import es.anjon.dyl.wedding.R;
 import es.anjon.dyl.wedding.services.Quiz;
 
 public class QuizFragment extends Fragment {
 
-    private static final String TAG = "QuizFragment";
     private static final int NO_ANSWER = -1;
-    private RadioGroup mAnswer;
-    private TextView mQuestionTextView;
+    private RadioGroup mAnswerView;
+    private TextView mQuestionView;
+    private TextView mScoreView;
+    private Button mStart;
+    private Button mSubmit;
+    private LinearLayout mSetupView;
+    private LinearLayout mQuizView;
+    private LinearLayout mResultView;
     private Quiz mQuiz;
 
     public static Fragment newInstance() {
@@ -36,54 +41,56 @@ public class QuizFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAnswer = view.findViewById(R.id.answer);
-        mQuestionTextView = view.findViewById(R.id.question);
-        final Button submitButton = view.findViewById(R.id.button_quiz_submit);
-        final Button startButton = view.findViewById(R.id.button_quiz_start);
-        final LinearLayout setupView = view.findViewById(R.id.quiz_setup);
+        mAnswerView = view.findViewById(R.id.answer);
+        mQuestionView = view.findViewById(R.id.question);
+        mScoreView = view.findViewById(R.id.score);
+        mSetupView = view.findViewById(R.id.quiz_setup);
+        mStart = view.findViewById(R.id.button_quiz_start);
+        mSubmit = view.findViewById(R.id.button_quiz_submit);
+        mQuizView = view.findViewById(R.id.quiz);
+        mResultView = view.findViewById(R.id.results);
 
         // TODO has the quiz already been done?
         mQuiz = new Quiz();
+        mSetupView.setVisibility(View.VISIBLE);
 
-        startButton.setOnClickListener(new View.OnClickListener() {
+        mStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "Start button!");
-                nextQuestion();
-                setupView.setVisibility(View.GONE);
-                mAnswer.setVisibility(View.VISIBLE);
-                submitButton.setVisibility(View.VISIBLE);
-            };
+                startQuiz();
+            }
         });
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "Submit button!");
-                submitButton.setText(getText(R.string.quiz_submit));
-                mAnswer.setVisibility(View.VISIBLE);
-                submit();
-            };
+                submitAnswer();
+            }
         });
     }
 
-    private void submit() {
+    private void startQuiz() {
+        nextQuestion();
+        mSetupView.setVisibility(View.GONE);
+        mQuizView.setVisibility(View.VISIBLE);
+    }
+
+    private void submitAnswer() {
         int answer = getAnswer();
         if (answer == NO_ANSWER) {
-            // TODO prompt user to select answer
+            toast(getString(R.string.quiz_no_answer));
             return;
         }
-        boolean correct = mQuiz.answer(answer);
-        // TODO show response
+        mQuiz.answer(answer);
         if (mQuiz.hasQuestion()) {
             nextQuestion();
         } else {
-            // TODO end the quiz
+            finishQuiz();
         }
     }
 
     private int getAnswer() {
-        switch(mAnswer.getCheckedRadioButtonId()) {
+        switch(mAnswerView.getCheckedRadioButtonId()) {
             case R.id.alice:
                 return Quiz.ALICE;
             case R.id.dylan:
@@ -96,8 +103,18 @@ public class QuizFragment extends Fragment {
     }
 
     private void nextQuestion() {
-        mQuestionTextView.setText(mQuiz.getQuestion().toString());
-        mAnswer.clearCheck();
+        mQuestionView.setText(mQuiz.getQuestion().toString());
+        mAnswerView.clearCheck();
+    }
+
+    private void finishQuiz() {
+        mScoreView.setText(mQuiz.getScore());
+        mQuizView.setVisibility(View.GONE);
+        mResultView.setVisibility(View.VISIBLE);
+    }
+
+    private void toast(String text) {
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
 }
