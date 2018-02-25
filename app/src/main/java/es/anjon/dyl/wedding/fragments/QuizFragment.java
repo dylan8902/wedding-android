@@ -1,6 +1,8 @@
 package es.anjon.dyl.wedding.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +24,8 @@ import es.anjon.dyl.wedding.services.Quiz;
 public class QuizFragment extends Fragment {
 
     private static final int NO_ANSWER = -1;
+    private static final int NO_SCORE = -1;
+    private static final String SCORE = "Score";
     private RadioGroup mAnswerView;
     private TextView mQuestionView;
     private TextView mScoreView;
@@ -32,6 +36,7 @@ public class QuizFragment extends Fragment {
     private LinearLayout mResultView;
     private Spinner mSpinner;
     private Quiz mQuiz;
+    private SharedPreferences mPrefs;
 
     public static Fragment newInstance() {
         return new QuizFragment();
@@ -56,9 +61,13 @@ public class QuizFragment extends Fragment {
         mResultView = view.findViewById(R.id.results);
         mSpinner = view.findViewById(R.id.table);
 
-        // TODO has the quiz already been done?
-        mQuiz = new Quiz();
-        mSetupView.setVisibility(View.VISIBLE);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int score = mPrefs.getInt(SCORE, NO_SCORE);
+        if (score != NO_SCORE) {
+            finishQuiz(score);
+        } else {
+            setupQuiz();
+        }
 
         mStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +82,11 @@ public class QuizFragment extends Fragment {
                 submitAnswer();
             }
         });
+    }
+
+    private void setupQuiz() {
+        mQuiz = new Quiz();
+        mSetupView.setVisibility(View.VISIBLE);
     }
 
     private void startQuiz() {
@@ -91,7 +105,9 @@ public class QuizFragment extends Fragment {
         if (mQuiz.hasQuestion()) {
             nextQuestion();
         } else {
-            finishQuiz();
+            mPrefs.edit().putInt(SCORE, mQuiz.getScore()).apply();
+            new Result(mQuiz.getScore(), mSpinner.getSelectedItem().toString()).save();
+            finishQuiz(mQuiz.getScore());
         }
     }
 
@@ -113,11 +129,10 @@ public class QuizFragment extends Fragment {
         mAnswerView.clearCheck();
     }
 
-    private void finishQuiz() {
-        mScoreView.setText(String.format(Locale.UK, "Score: %d", mQuiz.getScore()));
+    private void finishQuiz(int finalScore) {
+        mScoreView.setText(String.format(Locale.UK, "Score: %d", finalScore));
         mQuizView.setVisibility(View.GONE);
         mResultView.setVisibility(View.VISIBLE);
-        new Result(mQuiz.getScore(), mSpinner.getSelectedItem().toString()).save();
     }
 
     private void toast(String text) {
