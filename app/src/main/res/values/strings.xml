@@ -11,7 +11,7 @@
     <string name="quiz_name">Guess Who: Alice, Dylan or Both?</string>
     <string name="quiz_welcome">How well do you know us? Compete against the other tables in our quiz</string>
     <string name="quiz_start">Start</string>
-    <string name="quiz_submit">Go</string>
+    <string name="quiz_submit">Submit</string>
     <string name="quiz_alice">Alice</string>
     <string name="quiz_dylan">Dylan</string>
     <string name="quiz_both">Both</string>

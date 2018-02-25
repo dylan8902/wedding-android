@@ -16,24 +16,23 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:text="@string/quiz_name" />
 
-    <TextView
-        android:id="@+id/question"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/quiz_question_size"
-        android:text="@string/quiz_welcome" />
-
     <LinearLayout
-        android:id="@+id/table_choice"
+        android:id="@+id/quiz_setup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/quiz_question_size"
+            android:text="@string/quiz_welcome" />
 
         <TextView
             android:layout_width="match_parent"
@@ -50,7 +49,30 @@
             android:textSize="@dimen/quiz_question_size"
             android:entries="@array/tables" />
 
+        <Button
+            android:id="@+id/button_quiz_start"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:text="@string/quiz_start" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/quiz_question_size" />
 
     <RadioGroup
         android:id="@+id/answer"
@@ -85,7 +107,8 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:padding="@dimen/activity_horizontal_margin"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:text="@string/quiz_submit"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+        android:visibility="gone" />
 
 </LinearLayout>

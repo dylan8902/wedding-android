@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -37,11 +38,24 @@ public class QuizFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mAnswer = view.findViewById(R.id.answer);
         mQuestionTextView = view.findViewById(R.id.question);
+        final Button submitButton = view.findViewById(R.id.button_quiz_submit);
+        final Button startButton = view.findViewById(R.id.button_quiz_start);
+        final LinearLayout setupView = view.findViewById(R.id.quiz_setup);
 
         // TODO has the quiz already been done?
         mQuiz = new Quiz();
 
-        final Button submitButton = view.findViewById(R.id.button_quiz_submit);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "Start button!");
+                nextQuestion();
+                setupView.setVisibility(View.GONE);
+                mAnswer.setVisibility(View.VISIBLE);
+                submitButton.setVisibility(View.VISIBLE);
+            };
+        });
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
