@@ -25,6 +25,7 @@ import es.anjon.dyl.wedding.adapters.TablePlanAdapter;
 public class TablePlanFragment extends Fragment {
 
     private static final String TAG = "TablePlanFragment";
+    private static final String TABLE_PLANS = "table_plans";
     private Query guestsRef;
     private ChildEventListener childEventListener;
 
@@ -54,7 +55,7 @@ public class TablePlanFragment extends Fragment {
         tablePlan.setAdapter(adapter);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        guestsRef = database.getReference("table_plans").child("Cardiff");
+        guestsRef = database.getReference(TABLE_PLANS);
 
         childEventListener = new ChildEventListener() {
             @Override

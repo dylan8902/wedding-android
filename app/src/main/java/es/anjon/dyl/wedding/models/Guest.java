@@ -5,8 +5,9 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Guest {
-    private String key;
     private String name;
+    private boolean table;
+    private String key;
 
     public Guest() {
 
@@ -18,6 +19,10 @@ public class Guest {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isTable() {
+        return table;
     }
 
     @Exclude

@@ -1,7 +1,7 @@
 package es.anjon.dyl.wedding.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -39,9 +39,13 @@ public class TablePlanAdapter extends RecyclerView.Adapter<TablePlanAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextView.setText(mDataset.get(position).getName());
-        Log.d("GUEST", "onBindViewHolder:" + mDataset.get(position).getName());
-
+        Guest guest = mDataset.get(position);
+        holder.mTextView.setText(guest.getName());
+        if (guest.isTable()) {
+            holder.mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f);
+        } else {
+            holder.mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
+        }
     }
 
     @Override
