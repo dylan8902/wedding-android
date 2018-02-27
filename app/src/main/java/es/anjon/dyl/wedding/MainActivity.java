@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if (prefs.getBoolean(TABLE_PLAN_KEY, false)) {
             menu.add(Menu.NONE, TABLE_PLAN_ID, Menu.NONE, getString(R.string.title_table_plan))
-                    .setIcon(R.drawable.ic_home_black_24dp);
+                    .setIcon(R.drawable.ic_restaurant_menu_black_24dp);
         }
 
         if (prefs.getBoolean(QUIZ_KEY, false)) {
