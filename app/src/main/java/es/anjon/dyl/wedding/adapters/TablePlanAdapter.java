@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.anjon.dyl.wedding.R;
+import es.anjon.dyl.wedding.models.Guest;
 
 public class TablePlanAdapter extends RecyclerView.Adapter<TablePlanAdapter.ViewHolder> {
 

@@ -1,4 +1,4 @@
-package es.anjon.dyl.wedding.adapters;
+package es.anjon.dyl.wedding.models;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;

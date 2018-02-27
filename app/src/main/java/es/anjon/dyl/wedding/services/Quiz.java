@@ -3,7 +3,7 @@ package es.anjon.dyl.wedding.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.anjon.dyl.wedding.quiz.Question;
+import es.anjon.dyl.wedding.models.Question;
 
 public class Quiz {
 

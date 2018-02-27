@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.anjon.dyl.wedding.R;
-import es.anjon.dyl.wedding.adapters.Guest;
+import es.anjon.dyl.wedding.models.Guest;
 import es.anjon.dyl.wedding.adapters.TablePlanAdapter;
 
 public class TablePlanFragment extends Fragment {

@@ -1,4 +1,4 @@
-package es.anjon.dyl.wedding.quiz;
+package es.anjon.dyl.wedding.models;
 
 import android.util.Log;
 

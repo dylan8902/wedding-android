@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.Locale;
 
 import es.anjon.dyl.wedding.R;
-import es.anjon.dyl.wedding.quiz.Result;
+import es.anjon.dyl.wedding.models.Result;
 import es.anjon.dyl.wedding.services.Quiz;
 
 public class QuizFragment extends Fragment {
