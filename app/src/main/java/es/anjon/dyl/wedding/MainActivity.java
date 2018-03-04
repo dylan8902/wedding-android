@@ -1,7 +1,6 @@
 package es.anjon.dyl.wedding;
 
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -18,10 +17,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import es.anjon.dyl.wedding.fragments.HomeFragment;
+import es.anjon.dyl.wedding.fragments.PhotosFragment;
+import es.anjon.dyl.wedding.fragments.QuizFragment;
+import es.anjon.dyl.wedding.fragments.TablePlanFragment;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -32,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int TABLE_PLAN_ID = 201;
     private static final int QUIZ_ID = 203;
     private static final int PHOTOS_ID = 204;
-    private static final LatLng ST_MARYS = new LatLng(51.4707221,-3.1772467);
-    private static final LatLng ST_DAVIDS = new LatLng(51.46055,-3.1692467);
+    private static final LatLng ST_MARYS = new LatLng(51.473842,-3.172077);
+    private static final LatLng ST_DAVIDS = new LatLng(51.4605074,-3.1672796);
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,6 +56,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signInAnonymously().addOnCompleteListener(
+                this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = auth.getCurrentUser();
+                            Log.d(TAG, "signInAnonymously:success " + user.toString());
+                        } else {
+                            Log.w(TAG, "signInAnonymously:failure", task.getException());
+                        }
+                    }
+                });
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Menu menu = navigation.getMenu();
@@ -62,17 +85,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if (prefs.getBoolean(TABLE_PLAN_KEY, false)) {
             menu.add(Menu.NONE, TABLE_PLAN_ID, Menu.NONE, getString(R.string.title_table_plan))
-                    .setIcon(R.drawable.ic_home_black_24dp);
+                    .setIcon(R.drawable.ic_restaurant_menu_black_24dp);
         }
 
         if (prefs.getBoolean(QUIZ_KEY, false)) {
             menu.add(Menu.NONE, QUIZ_ID, Menu.NONE, getString(R.string.title_quiz))
-                    .setIcon(R.drawable.ic_home_black_24dp);
+                    .setIcon(R.drawable.ic_quiz_black_24dp);
         }
 
         if (prefs.getBoolean(PHOTOS_KEY, false)) {
             menu.add(Menu.NONE, PHOTOS_ID, Menu.NONE, getString(R.string.title_photos))
-                    .setIcon(R.drawable.ic_home_black_24dp);
+                    .setIcon(R.drawable.ic_photos_black_24dp);
         }
 
         selectFragment(navigation.getMenu().getItem(0));
@@ -89,6 +112,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 frag = SupportMapFragment.newInstance();
                 ((SupportMapFragment) frag).getMapAsync(this);
                 break;
+            case TABLE_PLAN_ID:
+                frag = TablePlanFragment.newInstance();
+                break;
+            case QUIZ_ID:
+                frag = QuizFragment.newInstance();
+                break;
+            case PHOTOS_ID:
+                frag = PhotosFragment.newInstance();
+                break;
         }
 
         if (frag != null) {
@@ -100,17 +132,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-        try {
-            boolean success = googleMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style));
-            if (!success) {
-                Log.e(TAG, "Style parsing failed.");
-            }
-        } catch (Resources.NotFoundException e) {
-            Log.e(TAG, "Can't find style. Error: ", e);
-        }
-
         googleMap.addMarker(new MarkerOptions().position(ST_MARYS)
                 .title("St Mary's Church"));
         googleMap.addMarker(new MarkerOptions().position(ST_DAVIDS)
