@@ -42,9 +42,11 @@ public class TablePlanAdapter extends RecyclerView.Adapter<TablePlanAdapter.View
         Guest guest = mDataset.get(position);
         holder.mTextView.setText(guest.getName());
         if (guest.isTable()) {
-            holder.mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f);
+            holder.mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f);
+            holder.mTextView.setPadding(0,20,0,4);
         } else {
             holder.mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
+            holder.mTextView.setPadding(0,4,0,4);
         }
     }
 
