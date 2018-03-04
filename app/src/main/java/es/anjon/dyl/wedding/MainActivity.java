@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import es.anjon.dyl.wedding.fragments.HomeFragment;
 import es.anjon.dyl.wedding.fragments.PhotosFragment;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInAnonymously().addOnCompleteListener(
