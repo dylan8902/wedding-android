@@ -55,6 +55,8 @@ public class TablePlanFragment extends Fragment {
         tablePlan.setAdapter(adapter);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true);
+
         guestsRef = database.getReference(TABLE_PLANS);
 
         childEventListener = new ChildEventListener() {
