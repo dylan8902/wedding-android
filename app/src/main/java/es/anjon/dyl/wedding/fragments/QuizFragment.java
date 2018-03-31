@@ -148,7 +148,7 @@ public class QuizFragment extends Fragment {
     }
 
     private void finishQuiz(int finalScore) {
-        mScoreView.setText(String.format(Locale.UK, "Score: %d", finalScore));
+        mScoreView.setText(String.format(Locale.UK, "Your Score: %d", finalScore));
         mQuizView.setVisibility(View.GONE);
         mResultView.setVisibility(View.VISIBLE);
         mTableScores.setHasFixedSize(true);

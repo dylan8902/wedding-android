@@ -141,7 +141,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:gravity="center"
-                android:padding="@dimen/activity_horizontal_margin"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/quiz_question_size" />
 
@@ -151,7 +150,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:gravity="center"
-                android:padding="@dimen/activity_horizontal_margin"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/quiz_question_size"
                 android:text="@string/quiz_result"/>

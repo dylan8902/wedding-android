@@ -40,7 +40,7 @@ public class QuizTableResult {
         for(Result result : results.values()) {
             score += result.getScore();
         }
-        return String.format("%.2f", score / results.size());
+        return String.format("%.1f", score / results.size());
     }
 
     @Override

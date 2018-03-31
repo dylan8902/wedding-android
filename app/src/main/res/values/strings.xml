@@ -16,7 +16,7 @@
     <string name="quiz_alice">Alice</string>
     <string name="quiz_dylan">Dylan</string>
     <string name="quiz_both">Both</string>
-    <string name="quiz_result">Nice one! Your table\'s score has been averaged - listen out for the final results later!</string>
+    <string name="quiz_result">Average Table Scores</string>
     <string name="quiz_table_choice">What table are you sat at?</string>
     <string-array name="tables">
         <item>Cardiff</item>

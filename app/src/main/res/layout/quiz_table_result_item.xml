@@ -10,13 +10,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/quiz_table_scores_size" />
 
     <TextView
         android:id="@+id/table_score"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@android:color/black" />
+        android:gravity="right"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/quiz_table_scores_size" />
 
 </LinearLayout>
