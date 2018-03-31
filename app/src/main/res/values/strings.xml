@@ -19,6 +19,7 @@
     <string name="quiz_result">Average Table Scores</string>
     <string name="quiz_table_choice">What table are you sat at?</string>
     <string-array name="tables">
+        <item>Evening Guest</item>
         <item>Cardiff</item>
         <item>Marrakesh</item>
         <item>Mumbai</item>
@@ -30,4 +31,12 @@
         <item>Florence</item>
         <item>Budapest</item>
     </string-array>
+    <string name="schedule_ceremony_time">1:00pm</string>
+    <string name="schedule_ceremony">Wedding Ceremony</string>
+    <string name="schedule_arrival_time">2:30pm</string>
+    <string name="schedule_arrival">Arrival Drinks and Photographs</string>
+    <string name="schedule_meal_time">4:00pm</string>
+    <string name="schedule_meal">Meal</string>
+    <string name="schedule_evening_time">7:00pm</string>
+    <string name="schedule_evening">Evening Reception</string>
 </resources>
