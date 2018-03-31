@@ -4,5 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="quiz_question_size">24sp</dimen>
     <dimen name="quiz_answer_size">20sp</dimen>
+    <dimen name="quiz_table_scores_size">20sp</dimen>
     <dimen name="list_padding">4dp</dimen>
 </resources>

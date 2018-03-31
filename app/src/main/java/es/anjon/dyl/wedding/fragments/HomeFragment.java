@@ -33,6 +33,7 @@ public class HomeFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_TEXT, text);
         frag.setArguments(args);
+        frag.setRetainInstance(true);
         return frag;
     }
 
