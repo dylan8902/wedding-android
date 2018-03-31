@@ -10,8 +10,9 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Result {
 
-    private static final String QUIZ_KEY = "quiz";
-    private static final String TABLES_KEY = "tables";
+    public static final String QUIZ_KEY = "quiz";
+    public static final String TABLES_KEY = "tables";
+    public static final String RESULTS_KEY = "results";
     private int score;
     private String table;
 
@@ -36,7 +37,7 @@ public class Result {
     public void save() {
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mTablesRef = mDatabase.getReference(QUIZ_KEY).child(TABLES_KEY);
-        DatabaseReference mResultRef = mTablesRef.child(getTable()).push();
+        DatabaseReference mResultRef = mTablesRef.child(getTable()).child(RESULTS_KEY).push();
         mResultRef.setValue(this);
         Log.i("Result", "Result has been saved as " + mResultRef.getKey());
     }

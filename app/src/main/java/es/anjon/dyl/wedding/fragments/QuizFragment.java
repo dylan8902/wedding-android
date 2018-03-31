@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +18,30 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import es.anjon.dyl.wedding.R;
+import es.anjon.dyl.wedding.adapters.QuizResultAdapter;
+import es.anjon.dyl.wedding.models.QuizTableResult;
 import es.anjon.dyl.wedding.models.Result;
 import es.anjon.dyl.wedding.services.Quiz;
 
 public class QuizFragment extends Fragment {
 
+    private static final String TAG = "QuizFragment";
     private static final int NO_ANSWER = -1;
     private static final int NO_SCORE = -1;
     private static final String SCORE = "Score";
+    private Query tableScoresRef;
+    private ChildEventListener childEventListener;
     private RadioGroup mAnswerView;
     private TextView mQuestionView;
     private TextView mScoreView;
@@ -37,6 +53,7 @@ public class QuizFragment extends Fragment {
     private Spinner mSpinner;
     private Quiz mQuiz;
     private SharedPreferences mPrefs;
+    private RecyclerView mTableScores;
 
     public static Fragment newInstance() {
         return new QuizFragment();
@@ -60,6 +77,7 @@ public class QuizFragment extends Fragment {
         mQuizView = view.findViewById(R.id.quiz);
         mResultView = view.findViewById(R.id.results);
         mSpinner = view.findViewById(R.id.table);
+        mTableScores = view.findViewById(R.id.table_scores);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         int score = mPrefs.getInt(SCORE, NO_SCORE);
@@ -133,10 +151,78 @@ public class QuizFragment extends Fragment {
         mScoreView.setText(String.format(Locale.UK, "Score: %d", finalScore));
         mQuizView.setVisibility(View.GONE);
         mResultView.setVisibility(View.VISIBLE);
+        mTableScores.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mTableScores.setLayoutManager(layoutManager);
+        final List<QuizTableResult> quizTableResults = new ArrayList<>();
+        final List<String> quizTableKeys = new ArrayList<>();
+        final QuizResultAdapter adapter = new QuizResultAdapter(quizTableResults);
+        mTableScores.setAdapter(adapter);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        tableScoresRef = database.getReference(Result.QUIZ_KEY).child(Result.TABLES_KEY);
+
+        childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+                QuizTableResult tableResult = dataSnapshot.getValue(QuizTableResult.class);
+                tableResult.setKey(dataSnapshot.getKey());
+                quizTableResults.add(tableResult);
+                quizTableKeys.add(dataSnapshot.getKey());
+                adapter.notifyItemInserted(quizTableResults.size() - 1);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+                QuizTableResult tableResult = dataSnapshot.getValue(QuizTableResult.class);
+                tableResult.setKey(dataSnapshot.getKey());
+                int tableResultIndex = quizTableKeys.indexOf(dataSnapshot.getKey());
+                if (tableResultIndex > -1) {
+                    quizTableResults.set(tableResultIndex, tableResult);
+                    adapter.notifyItemChanged(tableResultIndex);
+                } else {
+                    Log.w(TAG, "onChildChanged:unknown_child:" + dataSnapshot.getKey());
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+                int tableResultIndex = quizTableKeys.indexOf(dataSnapshot.getKey());
+                if (tableResultIndex > -1) {
+                    quizTableKeys.remove(tableResultIndex);
+                    quizTableResults.remove(tableResultIndex);
+                    adapter.notifyItemRemoved(tableResultIndex);
+                } else {
+                    Log.w(TAG, "onChildRemoved:unknown_child:" + dataSnapshot.getKey());
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "onCancelled", databaseError.toException());
+            }
+        };
+        tableScoresRef.addChildEventListener(childEventListener);
     }
 
     private void toast(String text) {
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (childEventListener != null) {
+            tableScoresRef.removeEventListener(childEventListener);
+        }
     }
 
 }
