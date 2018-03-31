@@ -1,6 +1,7 @@
 package es.anjon.dyl.wedding;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -164,6 +165,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .setIcon(R.drawable.ic_photos_black_24dp);
         }
         selectFragment(menu.getItem(0));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
     }
 
 }

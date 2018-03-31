@@ -18,7 +18,9 @@ public class PhotosFragment extends Fragment {
     private static final String TAG = "PhotosFragment";
 
     public static Fragment newInstance() {
-        return new PhotosFragment();
+        PhotosFragment frag = new PhotosFragment();
+        frag.setRetainInstance(true);
+        return frag;
     }
 
     @Override

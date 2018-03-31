@@ -33,7 +33,9 @@ public class TablePlanFragment extends Fragment {
     }
 
     public static TablePlanFragment newInstance() {
-        return new TablePlanFragment();
+        TablePlanFragment frag = new TablePlanFragment();
+        frag.setRetainInstance(true);
+        return frag;
     }
 
     @Override

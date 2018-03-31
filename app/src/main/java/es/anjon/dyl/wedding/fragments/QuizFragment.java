@@ -56,7 +56,9 @@ public class QuizFragment extends Fragment {
     private RecyclerView mTableScores;
 
     public static Fragment newInstance() {
-        return new QuizFragment();
+        QuizFragment frag = new QuizFragment();
+        frag.setRetainInstance(true);
+        return frag;
     }
 
     @Override
