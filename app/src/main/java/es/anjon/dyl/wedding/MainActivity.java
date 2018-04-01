@@ -34,6 +34,7 @@ import es.anjon.dyl.wedding.fragments.PhotosFragment;
 import es.anjon.dyl.wedding.fragments.QuizFragment;
 import es.anjon.dyl.wedding.fragments.TablePlanFragment;
 import es.anjon.dyl.wedding.models.Navigation;
+import es.anjon.dyl.wedding.services.Database;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -82,8 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(true);
+        FirebaseDatabase firebaseDatabase = Database.getDatabase();
         firebaseDatabase.getReference(Navigation.KEY).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
