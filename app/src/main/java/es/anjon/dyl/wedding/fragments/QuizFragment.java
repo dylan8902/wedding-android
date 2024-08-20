@@ -132,16 +132,17 @@ public class QuizFragment extends Fragment {
     }
 
     private int getAnswer() {
-        switch(mAnswerView.getCheckedRadioButtonId()) {
-            case R.id.alice:
-                return Quiz.ALICE;
-            case R.id.dylan:
-                return Quiz.DYLAN;
-            case R.id.both:
-                return Quiz.BOTH;
-            default:
-                return NO_ANSWER;
+        int buttonId = mAnswerView.getCheckedRadioButtonId();
+        if (buttonId == R.id.alice) {
+            return Quiz.ALICE;
         }
+        if (buttonId == R.id.dylan) {
+            return Quiz.DYLAN;
+        }
+        if (buttonId == R.id.both) {
+            return Quiz.BOTH;
+        }
+        return NO_ANSWER;
     }
 
     private void nextQuestion() {
