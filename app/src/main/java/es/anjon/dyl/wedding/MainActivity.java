@@ -2,16 +2,20 @@ package es.anjon.dyl.wedding;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,11 +23,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -68,20 +67,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mNav.loadPrefs(prefs);
         updateNavigation(menu);
-
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signInAnonymously().addOnCompleteListener(
-                this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = auth.getCurrentUser();
-                            Log.d(TAG, "signInAnonymously:success " + user.toString());
-                        } else {
-                            Log.w(TAG, "signInAnonymously:failure", task.getException());
-                        }
-                    }
-                });
 
         FirebaseDatabase firebaseDatabase = Database.getDatabase();
         firebaseDatabase.getReference(Navigation.KEY).addValueEventListener(new ValueEventListener() {
@@ -165,12 +150,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .setIcon(R.drawable.ic_photos_black_24dp);
         }
         selectFragment(menu.getItem(0));
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
     }
 
 }
